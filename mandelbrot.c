@@ -1,21 +1,13 @@
 #include "fractol.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	mandelbrot_iter(t_complex c)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->line_len + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-int    mandelbrot_iter(t_complex c)
-{
-    t_complex	z;
+	t_complex	z;
 	int			i;
 	double		tmp;
 
 	z.im = 0;
-    z.re = 0;
+	z.re = 0;
 	i = 0;
 	while (i < 42)
 	{
@@ -28,25 +20,26 @@ int    mandelbrot_iter(t_complex c)
 	}
 	return (i);
 }
-void draw_mandelbrot(t_data *window)
+
+void	draw_mandelbrot(t_data *window)
 {
-    int			x;
+	int			x;
 	int			y;
 	t_complex	c;
 	int			iter;
 	double		re_factor;
 	double		im_factor;
 
-	re_factor = 3.0 / WIDTH;
-	im_factor = 3.0 / HEIGHT;
+	re_factor = (window->max_re - window->min_re) / WIDTH;
+	im_factor = (window->max_im - window->min_im) / HEIGHT;
 	y = 0;
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
-			c.re = -2.0 + x * re_factor;
-			c.im = -1.5 + y * im_factor;
+			c.re = window->min_re + x * re_factor;
+			c.im = window->max_im - y * im_factor;
 			iter = mandelbrot_iter(c);
 			my_mlx_pixel_put(window, x, y, get_color(iter));
 			x++;

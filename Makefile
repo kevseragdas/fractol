@@ -1,7 +1,7 @@
 NAME = fractol
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iminilibx-linux
-SRC = main.c mandelbrot.c
+SRC = main.c mandelbrot.c julia.c utils.c mause_moves.c
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
