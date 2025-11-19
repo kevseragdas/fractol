@@ -1,14 +1,5 @@
 #include "fractol.h"
 
-void	redraw_fractal(t_data *window)
-{
-	if (window->set_type == 'm')
-		draw_mandelbrot(window);
-	else if (window->set_type == 'j')
-		draw_julia(window);
-	mlx_put_image_to_window(window->mlx, window->win, window->img, 0, 0);
-}
-
 void	handle_pan(int keycode, t_data *window)
 {
 	double	range_re;
@@ -71,23 +62,6 @@ int	mouse_hook(int button, int x, int y, t_data *window)
 	window->max_im = (window->max_im - mouse_im) / zoom_factor + mouse_im;
 	redraw_fractal(window);
 	return (0);
-}
-
-void	init_mlx(t_data *window)
-{
-	window->mlx = mlx_init();
-	if (!window->mlx)
-		clean_exit(window);
-	window->win = mlx_new_window(window->mlx, WIDTH, HEIGHT, "Fractol");
-	if (!window->win)
-		clean_exit(window);
-	window->img = mlx_new_image(window->mlx, WIDTH, HEIGHT);
-	if (!window->img)
-		clean_exit(window);
-	window->addr = mlx_get_data_addr(window->img, &window->bits_per_pixel,
-			&window->line_len, &window->endian);
-	if (!window->addr)
-		clean_exit(window);
 }
 
 void	init_fractal_vars(t_data *window, char s, double re, double im)

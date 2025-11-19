@@ -1,5 +1,14 @@
 #include "fractol.h"
 
+void	redraw_fractal(t_data *window)
+{
+	if (window->set_type == 'm')
+		draw_mandelbrot(window);
+	else if (window->set_type == 'j')
+		draw_julia(window);
+	mlx_put_image_to_window(window->mlx, window->win, window->img, 0, 0);
+}
+
 int	clean_exit(t_data *window)
 {
 	if (!window)
@@ -39,19 +48,6 @@ static void	open_window(char s, double re, double im)
 	redraw_fractal(&window);
 	register_hooks(&window);
 	mlx_loop(window.mlx);
-}
-
-int	get_color(int iter)
-{
-	int	red;
-	int	green;
-	int	blue;
-	if (iter == MAX_ITER || iter == 0)
-			return (0x000000);
-	red = (iter * 9) % 255;
-	green = (iter * 5) % 255;
-	blue = (iter * 15) % 255;
-	return (red << 16 | green << 8 | blue);
 }
 
 int main(int ac, char **arg)

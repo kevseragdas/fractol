@@ -1,5 +1,4 @@
 #include "fractol.h"
-#include <stdio.h>
 
 int	julia_iter(t_complex z, t_complex c)
 {
@@ -30,7 +29,6 @@ void	draw_julia(t_data *window)
 	double		re_factor;
 	double		im_factor;
 
-	printf("olumlu\n");
 	c.re = window->julia_c_re;
 	c.im = window->julia_c_im;
 	re_factor = (window->max_re - window->min_re) / WIDTH;

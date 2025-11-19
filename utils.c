@@ -1,13 +1,5 @@
 #include "fractol.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_len + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
 int	is_valid_number(const char *str)
 {
 	int	i;
@@ -21,7 +13,7 @@ int	is_valid_number(const char *str)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
-	while (str[i])
+	while (str[i++])
 	{
 		if (str[i] >= '0' && str[i] <= '9')
 			digits++;
@@ -29,13 +21,11 @@ int	is_valid_number(const char *str)
 			dots++;
 		else
 			return (0);
-		i++;
 	}
 	if (dots > 1)
 		return (0);
 	if (digits == 0) 
 		return (0);
-	
 	return (1);
 }
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

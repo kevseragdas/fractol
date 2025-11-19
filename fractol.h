@@ -27,7 +27,7 @@
 # define KEY_DOWN 65364
 # define MOUSE_SCROLL_UP 4
 # define MOUSE_SCROLL_DOWN 5
-# define MAX_ITER 70
+# define MAX_ITER 100
 typedef struct s_data
 {
 	void	*mlx;
