@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   coloring.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kagdas <kagdas@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/25 15:42:24 by kagdas            #+#    #+#             */
+/*   Updated: 2025/11/25 15:42:24 by kagdas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 void	init_mlx(t_data *window)
@@ -22,8 +34,9 @@ int	get_color(int iter)
 	int	red;
 	int	green;
 	int	blue;
+
 	if (iter == MAX_ITER || iter == 0)
-			return (0x000000);
+		return (0x000000);
 	red = (iter * 9) % 255;
 	green = (iter * 5) % 255;
 	blue = (iter * 15) % 255;

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kagdas <kagdas@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/25 15:41:47 by kagdas            #+#    #+#             */
+/*   Updated: 2025/12/13 16:16:54 by kagdas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-void	redraw_fractal(t_data *window)
+void	fractal_type(t_data *window)
 {
 	if (window->set_type == 'm')
 		draw_mandelbrot(window);
@@ -26,15 +38,6 @@ int	clean_exit(t_data *window)
 	return (0);
 }
 
-int	close_window(void *param)
-{
-	t_data *window;
-
-	window = (t_data *)param;
-	clean_exit(window);
-	return (0);
-}
-
 static void	open_window(char s, double re, double im)
 {
 	t_data	window;
@@ -44,25 +47,26 @@ static void	open_window(char s, double re, double im)
 	window.img = NULL;
 	window.addr = NULL;
 	init_mlx(&window);
-	init_fractal_vars(&window, s, re, im);
-	redraw_fractal(&window);
-	register_hooks(&window);
+	set_defaults(&window, s, re, im);
+	fractal_type(&window);
+	click_moves(&window);
 	mlx_loop(window.mlx);
 }
 
-int main(int ac, char **arg)
+int	main(int ac, char **arg)
 {
-	t_complex c;
+	t_complex	c;
 
 	c.re = 0;
 	c.im = 0;
-	if(ac == 2 && ft_strncmp(arg[1], "mandelbrot", 10))
+	if (ac == 2 && ft_strncmp(arg[1], "mandelbrot", 10))
 		open_window('m', 0, 0);
-	else if( (ac == 4 && ft_strncmp(arg[1], "julia", 5)))
+	else if ((ac == 4 && ft_strncmp(arg[1], "julia", 5)))
 	{
-		if (!is_valid_number(arg[2]) || !is_valid_number(arg[3]))
+		if (!is_true_number(arg[2]) || !is_true_number(arg[3]))
 		{
-			write(2, "Please enter double type julia points\n", 39);
+			write(2, "*Please enter two valid julia coordinates.", 43);
+			write(2, "*\n*\tExample: -0.7 0.27015\t\t  *\n", 32);
 			return (1);
 		}
 		c.re = atof(arg[2]);
@@ -70,7 +74,9 @@ int main(int ac, char **arg)
 		open_window('j', c.re, c.im);
 	}
 	else
-		write(2, "Please enter \n\tmadelbrot or\n\tjulia value1 value2\n", 50);
-	return(0);
+	{
+		write(2, "Please enter: \n\t*\t  mandelbrot\t\t*\n", 35);
+		write(2, "\t*\t\tor\t\t*\n\t*julia <parameter1> <parameter2>*\n", 46);
+	}
+	return (0);
 }
-

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kagdas <kagdas@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/25 15:41:36 by kagdas            #+#    #+#             */
+/*   Updated: 2025/12/12 14:55:21 by kagdas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	mandelbrot_iter(t_complex c)
@@ -9,7 +21,7 @@ int	mandelbrot_iter(t_complex c)
 	z.im = 0;
 	z.re = 0;
 	i = 0;
-	while (i < 42)
+	while (i < MAX_ITER)
 	{
 		if ((z.re * z.re + z.im * z.im) > 4)
 			break ;
@@ -21,29 +33,34 @@ int	mandelbrot_iter(t_complex c)
 	return (i);
 }
 
-void	draw_mandelbrot(t_data *window)
+static	void	get_pixel_complex(double *re, double *im, t_data *w, int pos)
 {
-	int			x;
-	int			y;
-	t_complex	c;
-	int			iter;
-	double		re_factor;
-	double		im_factor;
+	int		x;
+	int		y;
+	double	re_f;
+	double	im_f;
 
-	re_factor = (window->max_re - window->min_re) / WIDTH;
-	im_factor = (window->max_im - window->min_im) / HEIGHT;
-	y = 0;
-	while (y < HEIGHT)
+	x = pos % WIDTH;
+	y = pos / WIDTH;
+	re_f = (w->max_re - w->min_re) / WIDTH;
+	im_f = (w->max_im - w->min_im) / HEIGHT;
+	*re = w->min_re + x * re_f;
+	*im = w->max_im - y * im_f;
+}
+
+void	draw_mandelbrot(t_data *w)
+{
+	int		pos;
+	int		iter;
+	double	re;
+	double	im;
+
+	pos = 0;
+	while (pos < WIDTH * HEIGHT)
 	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			c.re = window->min_re + x * re_factor;
-			c.im = window->max_im - y * im_factor;
-			iter = mandelbrot_iter(c);
-			my_mlx_pixel_put(window, x, y, get_color(iter));
-			x++;
-		}
-		y++;
+		get_pixel_complex(&re, &im, w, pos);
+		iter = mandelbrot_iter((t_complex){re, im});
+		my_mlx_pixel_put(w, pos % WIDTH, pos / HEIGHT, get_color(iter));
+		pos++;
 	}
 }

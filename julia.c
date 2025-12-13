@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   julia.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kagdas <kagdas@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/25 15:41:55 by kagdas            #+#    #+#             */
+/*   Updated: 2025/11/25 15:41:55 by kagdas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 int	julia_iter(t_complex z, t_complex c)
@@ -15,36 +27,26 @@ int	julia_iter(t_complex z, t_complex c)
 		z.re = tmp;
 		i++;
 	}
-
 	return (i);
 }
 
-void	draw_julia(t_data *window)
+void	draw_julia(t_data *w)
 {
-	int			x;
-	int			y;
-	t_complex	z;
-	t_complex	c;
-	int			iter;
-	double		re_factor;
-	double		im_factor;
+	int		pos;
+	int		iter;
+	double	re;
+	double	im;
 
-	c.re = window->julia_c_re;
-	c.im = window->julia_c_im;
-	re_factor = (window->max_re - window->min_re) / WIDTH;
-	im_factor = (window->max_im - window->min_im) / HEIGHT;
-	y = 0;
-	while (y < HEIGHT)
+	pos = 0;
+	while (pos < WIDTH * HEIGHT)
 	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			z.re = window->min_re + x * re_factor;
-			z.im = window->max_im - y * im_factor;
-			iter = julia_iter(z, c);
-			my_mlx_pixel_put(window, x, y, get_color(iter));
-			x++;
-		}
-		y++;
+		re = w->min_re + (pos % WIDTH)
+			* ((w->max_re - w->min_re) / WIDTH);
+		im = w->max_im - (pos / HEIGHT)
+			* ((w->max_im - w->min_im) / HEIGHT);
+		iter = julia_iter((t_complex){re, im},
+				(t_complex){w->julia_c_re, w->julia_c_im});
+		my_mlx_pixel_put(w, pos % WIDTH, pos / HEIGHT, get_color(iter));
+		pos++;
 	}
-}	
+}
