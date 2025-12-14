@@ -55,17 +55,17 @@ void	set_defaults(t_data *win, char type, double c_re, double c_im)
 	win->julia_c_im = c_im;
 	if (type == 'm')
 	{
-		win->min_re = M_MIN_RE;
-		win->max_re = M_MAX_RE;
-		win->min_im = M_MIN_IM;
-		win->max_im = M_MAX_IM;
+		win->min_re = -2.0;
+		win->max_re = 2.0;
+		win->min_im = -2.0;
+		win->max_im = 2.0;
 	}
 	else
 	{
-		win->min_re = J_MIN_RE;
-		win->max_re = J_MAX_RE;
-		win->min_im = J_MIN_IM;
-		win->max_im = J_MAX_IM;
+		win->min_re = -2.0;
+		win->max_re = 2.0;
+		win->min_im = -2.0;
+		win->max_im = 2.0;
 	}
 }
 

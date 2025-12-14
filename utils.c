@@ -6,7 +6,7 @@
 /*   By: kagdas <kagdas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 15:16:31 by kagdas            #+#    #+#             */
-/*   Updated: 2025/12/13 15:21:09 by kagdas           ###   ########.fr       */
+/*   Updated: 2025/12/14 16:15:35 by kagdas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ static double	make_dec(const char *arg)
 	return (num);
 }
 
+void	ft_error(void)
+{
+	write(2, "\n*Please enter two valid julia coordinates.", 44);
+	write(2, "*\n*\tExample: -0.7 0.27015\t\t  *\n\n", 33);
+	exit(1);
+}
+
 double	atof(const char *arg)
 {
 	double	num;
@@ -85,6 +92,8 @@ double	atof(const char *arg)
 			sign = -1;
 		arg++;
 	}
+	if (*arg == '.')
+		ft_error();
 	while (*arg >= '0' && *arg <= '9')
 	{
 		num = num * 10.0 + (*arg - '0');

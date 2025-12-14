@@ -6,7 +6,7 @@
 /*   By: kagdas <kagdas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 15:41:47 by kagdas            #+#    #+#             */
-/*   Updated: 2025/12/13 16:16:54 by kagdas           ###   ########.fr       */
+/*   Updated: 2025/12/14 18:29:17 by kagdas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,22 @@ int	main(int ac, char **arg)
 
 	c.re = 0;
 	c.im = 0;
-	if (ac == 2 && ft_strncmp(arg[1], "mandelbrot", 10))
+	if (ac == 2 && ((ft_strncmp(arg[1], "mandelbrot", 10))
+			|| (ft_strncmp(arg[1], "Mandelbrot", 10))))
 		open_window('m', 0, 0);
-	else if ((ac == 4 && ft_strncmp(arg[1], "julia", 5)))
+	else if ((ac == 4 && (ft_strncmp(arg[1], "julia", 5)
+				|| ft_strncmp(arg[1], "Julia", 5))))
 	{
 		if (!is_true_number(arg[2]) || !is_true_number(arg[3]))
-		{
-			write(2, "*Please enter two valid julia coordinates.", 43);
-			write(2, "*\n*\tExample: -0.7 0.27015\t\t  *\n", 32);
-			return (1);
-		}
+			ft_error();
 		c.re = atof(arg[2]);
 		c.im = atof(arg[3]);
 		open_window('j', c.re, c.im);
 	}
 	else
 	{
-		write(2, "Please enter: \n\t*\t  mandelbrot\t\t*\n", 35);
-		write(2, "\t*\t\tor\t\t*\n\t*julia <parameter1> <parameter2>*\n", 46);
+		write(2, "\nPlease enter: \n\t*\t  mandelbrot\t\t*\n", 35);
+		write(2, "\t*\t\tor\t\t*\n\t*julia <parameter1> <parameter2>*\n\n", 46);
 	}
 	return (0);
 }

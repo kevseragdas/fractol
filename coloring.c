@@ -31,16 +31,9 @@ void	init_mlx(t_data *window)
 
 int	get_color(int iter)
 {
-	int	red;
-	int	green;
-	int	blue;
-
-	if (iter == MAX_ITER || iter == 0)
+	if (iter == MAX_ITER)
 		return (0x000000);
-	red = (iter * 9) % 255;
-	green = (iter * 5) % 255;
-	blue = (iter * 15) % 255;
-	return (red << 16 | green << 8 | blue);
+	return (iter * 0x0F0205);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)

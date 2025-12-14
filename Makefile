@@ -5,6 +5,7 @@ SRC = main.c mandelbrot.c julia.c utils.c moves.c coloring.c
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
+	make -C minilibx-linux
 	$(CC) $(CFLAGS) $(OBJ) -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 all: $(NAME)
@@ -16,3 +17,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
